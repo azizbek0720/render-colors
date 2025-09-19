@@ -10,18 +10,24 @@ function getColor() {
   return "#" + Math.random().toString(16).slice(2, 8);
 }
 
+let color = [];
 function createCard() {
   for (let i = 0; i < 8; i++) {
+    color.push(getColor());
     const card = document.createElement("div");
-    card.textContent = getColor();
-    card.style.backgroundColor = card.textContent;
+    for (let i = 0; i < color.length; i++) {
+      card.style.backgroundColor = color[i];
+    }
     card.setAttribute("class", "card");
     cards.appendChild(card);
   }
 
   [...cards.children].forEach((card, idx) => {
+    card.textContent = idx + 1;
     card.addEventListener("click", function () {
-      document.body.style.backgroundColor = card.textContent;
+      for (let i = 0; i < color.length; i++) {
+        document.body.style.backgroundColor = color[idx];
+      }
       clickedIdx.textContent = idx + 1;
     });
   });
@@ -44,4 +50,5 @@ reloadBtn.addEventListener("click", function () {
   cardsCounter.textContent = 8;
   clickedIdx.textContent = "";
   document.body.style.backgroundColor = "#fff";
+  color = [];
 });
